@@ -46,31 +46,19 @@ binary_tree_t *binary_trees_ancestor(const binary_tree_t *first,
 {
 	size_t node1_level, node2_level;
 
-	if (!first || !second || first == second)
+	if (!first || !second)
 		return (NULL);
 	node1_level = get_level(first);
 	node2_level = get_level(second);
-	if ((node1_level == node2_level) && first == second)
-		return ((binary_tree_t *) first);
-	else if ((node1_level == node2_level) && (first->parent && second->parent))
-		return (first->parent);
-	else if (node1_level > node2_level)
+	while (first && node1_level > node2_level)
 	{
-		while (first && node1_level > node2_level)
-		{
-			first = first->parent;
-			node1_level = node1_level - 1;
-		}
+		first = first->parent;
+		node1_level = node1_level - 1;
 	}
-	else if (node1_level < node2_level)
+	while (second && node1_level < node2_level)
 	{
-		while (second && node1_level < node2_level)
-		{
-			second = second->parent;
-			node2_level = node2_level - 1;
-		}
+		second = second->parent;
+		node2_level = node2_level - 1;
 	}
-	if (first == second)
-		return ((binary_tree_t *) first);
 	return (common_ancestor(first, second));
 }
