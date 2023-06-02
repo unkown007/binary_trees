@@ -51,6 +51,26 @@ int getMin(binary_tree_t *tree)
 }
 
 /**
+ * isBST - checks if the tree is a valid BST
+ *
+ * @tree: pointer to the root of the tree
+ *
+ * Return: 1 if BST, 0 otherwise
+ */
+int isBST(const binary_tree_t *tree)
+{
+	if (tree == NULL)
+		return (1);
+	if (tree->left && getMax(tree->left) > tree->n)
+		return (0);
+	if (tree->right && getMin(tree->right) < tree->n)
+		return (0);
+	if (!isBST(tree->left) || !isBST(tree->right))
+		return (0);
+	return (1);
+}
+
+/**
  * binary_tree_is_bst - checks if a binary tree is a valid Binary Search Tree
  *
  * @tree: pointer to the root node of the tree
@@ -59,15 +79,7 @@ int getMin(binary_tree_t *tree)
  */
 int binary_tree_is_bst(const binary_tree_t *tree)
 {
-	int min_r, max_l;
-
 	if (tree == NULL)
 		return (0);
-	max_l = getMax(tree->left);
-	min_r = getMin(tree->right);
-	if (max_l > tree->n)
-		return (0);
-	if (min_r < tree->n)
-		return (0);
-	return (1);
+	return (isBST(tree));
 }
