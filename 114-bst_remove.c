@@ -59,11 +59,12 @@ void rm(bst_t *node)
  */
 bst_t *minValue(bst_t *tree)
 {
-	if (tree == NULL)
-		return (NULL);
-	if (tree->left == NULL)
-		return (tree);
-	return (minValue(tree->left));
+	bst_t *current;
+	
+	current = tree;
+	while (current && current->left != NULL)
+		current = current->left;
+	return (current);
 }
 
 /**
