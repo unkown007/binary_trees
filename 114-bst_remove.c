@@ -2,55 +2,6 @@
 #include "binary_trees.h"
 
 /**
- * rm - removes a node from a Binary Search Tree
- *
- * @node: pointer to the node of the tree
- */
-void rm(bst_t *node)
-{
-	bst_t *temp;
-
-	temp = node;
-	if (!node->left && !node->right)
-	{
-		node->left->parent = node->right;
-		node->right->parent = node->parent;
-		if (node->parent)
-		{
-			if (node->parent->left == node)
-				node->parent->left = node->right;
-			else
-				node->parent->right = node->right;
-		}
-		else
-			node = node->right;
-	} else if (!node->left)
-	{
-		node->right->parent = node->parent;
-		if (node->parent)
-		{
-			if (node->parent->left == node)
-				node->parent->left = node->right;
-			else
-				node->parent->right = node->right;
-		} else
-			node = node->right;
-	} else if (!node->right)
-	{
-		node->left->parent = node->parent;
-		if (node->parent)
-		{
-			if (node->parent->left == node)
-				node->parent->left = node->left;
-			else
-				node->parent->right = node->left;
-		} else
-			node = node->left;
-	}
-	free(temp);
-}
-
-/**
  * minValue -  get minimum value of the tree
  *
  * @tree: pointer to root node of the tree
@@ -60,7 +11,7 @@ void rm(bst_t *node)
 bst_t *minValue(bst_t *tree)
 {
 	bst_t *current;
-	
+
 	current = tree;
 	while (current && current->left != NULL)
 		current = current->left;
@@ -103,6 +54,8 @@ bst_t *bst_remove(bst_t *root, int value)
 		node = minValue(root->right);
 		root->n = node->n;
 		root->right = bst_remove(root->right, node->n);
+		if (root->right)
+			root->right->parent = root;
 	}
 	return (root);
 }
