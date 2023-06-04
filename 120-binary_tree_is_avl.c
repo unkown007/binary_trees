@@ -49,6 +49,39 @@ int isAVL(const binary_tree_t *tree, int min, int max)
 }
 
 /**
+ * exists - check if a value exists in a tree
+ *
+ * @tree: pointer to the tree
+ * @n: integer value
+ *
+ * Return: 1 if exists, 0 otherwise
+ */
+int exists(const binary_tree_t *tree, int n)
+{
+	if (tree == NULL)
+		return (0);
+	if (tree->n == n)
+		return (1);
+	return (exists(tree->left, n) || exists(tree->right, n));
+}
+
+/**
+ * duplicated - check if there is duplicated values in the tree
+ *
+ * @tree: pointer to the tree
+ *
+ * Return: 1 if duplicated values exists, 0 otherwise
+ */
+int duplicated(const binary_tree_t *tree)
+{
+	if (tree == NULL)
+		return (0);
+	if (exists(tree->left, tree->n) || exists(tree->right, tree->n))
+		return (1);
+	return (duplicated(tree->left) || duplicated(tree->right));
+}
+
+/**
  * binary_tree_is_avl - checks if a binary tree is a valid AVL tree
  *
  * @tree: pointer to the root node of the tree
@@ -58,6 +91,8 @@ int isAVL(const binary_tree_t *tree, int min, int max)
 int binary_tree_is_avl(const binary_tree_t *tree)
 {
 	if (tree == NULL)
+		return (0);
+	if (duplicated(tree))
 		return (0);
 	return (isAVL(tree, INT_MIN, INT_MAX));
 }
