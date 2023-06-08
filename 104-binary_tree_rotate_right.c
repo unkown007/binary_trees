@@ -22,9 +22,12 @@ binary_tree_t *binary_tree_rotate_right(binary_tree_t *tree)
 		tree->left = node->right;
 		node->right->parent = tree;
 	}
-	node->right = tree;
+	node->parent = tree->parent;
 	tree->parent = node;
+	node->right = tree;
 	tree = node;
-	tree->parent = NULL;
+	if (tree->parent)
+		tree->parent->right = tree;
+	/* tree->parent = NULL; */
 	return (tree);
 }
