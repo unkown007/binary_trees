@@ -2,7 +2,7 @@
 #include "binary_trees.h"
 
 /**
- * height - measures the height of a binary tree
+ * height_t - measures the height of a binary tree
  *
  * @tree: pointer to the root node of the tree
  *
@@ -48,7 +48,7 @@ avl_t *insert(avl_t **tree, avl_t *parent, avl_t **new, int value)
 	if (*tree == NULL)
 		return (*new = binary_tree_node(parent, value));
 	if ((*tree)->n == value)
-		return (*tree);
+		return (*new = *tree);
 	else if ((*tree)->n > value)
 	{
 		(*tree)->left = insert(&(*tree)->left, *tree, new, value);
@@ -65,14 +65,10 @@ avl_t *insert(avl_t **tree, avl_t *parent, avl_t **new, int value)
 	bl_factor = balance(*tree);
 	if (bl_factor > 1 && (*tree)->left->n > value)
 	{
-		/*if (tree->left->right)
-			binary_tree_rotate_left(tree->left);*/
 		*tree = binary_tree_rotate_right(*tree);
 	}
 	else if (bl_factor < -1 && (*tree)->right->n < value)
 	{
-		/*if (tree->right->left)
-			binary_tree_rotate_right(tree->left); */
 		*tree = binary_tree_rotate_left(*tree);
 	}
 	else if (bl_factor > 1 && (*tree)->left->n < value)
@@ -87,49 +83,6 @@ avl_t *insert(avl_t **tree, avl_t *parent, avl_t **new, int value)
 	}
 
 	return (*tree);
-}
-
-/**
- * avl_balance - balance a AVL tree
- *
- * @tree: pointer to the root node of the tree
- *
- * Return: pointer to the new root node
- */
-avl_t *avl_balance(avl_t *tree)
-{
-/*	int bl_factor; */
-
-	if (tree == NULL)
-		return (NULL);
-	/*if (tree->left)
-		avl_balance(tree->left);
-	if (tree->right)
-		avl_balance(tree->right);
-	bl_factor = binary_tree_balance(tree);
-	if (bl_factor > 1 && tree->left->n > value)
-	{*/
-		/*if (tree->left->right)
-			binary_tree_rotate_left(tree->left);*/
-/*		tree = binary_tree_rotate_right(tree);
-	}
-	else if (bl_factor < -1 && tree->right->n < value)
-	{*/
-		/*if (tree->right->left)
-			binary_tree_rotate_right(tree->left); */
-/*		tree = binary_tree_rotate_left(tree);
-	}
-	else if (bl_factor > 1 && tree->left->n < value)
-	{
-		binary_tree_rotate_left(tree->left);
-		tree = binary_tree_rotate_right(tree);
-	}
-	else if (bl_factor < -1 && tree->right->n > value)
-	{
-		binary_tree_rotate_right(tree->right);
-		tree = binary_tree_rotate_left(tree);
-	}*/
-	return (tree);
 }
 
 /**
@@ -152,6 +105,5 @@ avl_t *avl_insert(avl_t **tree, int value)
 		return (*tree);
 	}
 	insert(tree, *tree, &node, value);
-	/**tree = avl_balance(*tree);*/
 	return (node);
 }
