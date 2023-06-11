@@ -1,5 +1,6 @@
 #include <stdlib.h>
 #include "binary_trees.h"
+#include "102-binary_tree_is_complete.c"
 
 /**
  * isheap - checks if a binary tree is a valid Max Binary Heap
@@ -10,16 +11,16 @@
  */
 int isheap(const binary_tree_t *tree)
 {
-	if (!tree)
+	if (!tree->left && !tree->right)
 		return (1);
-	if (!tree->left && tree->right)
-		return (0);
-	if (tree->left && tree->left->n >= tree->n)
-		return (0);
-	if (tree->right && tree->right->n >= tree->n)
-		return (0);
-	return (isheap(tree->left) &&
-			isheap(tree->right));
+	if (tree->right == NULL)
+		return (tree->n >= tree->left->n);
+	else
+		if (tree->left->n <= tree->n && tree->right->n <= tree->n)
+			return (isheap(tree->left) &&
+					isheap(tree->right));
+		else
+			return (0);
 }
 
 /**
@@ -33,5 +34,5 @@ int binary_tree_is_heap(const binary_tree_t *tree)
 {
 	if (!tree)
 		return (0);
-	return (isheap(tree));
+	return (binary_tree_is_complete(tree) && isheap(tree));
 }
