@@ -14,9 +14,9 @@ int isheap(const binary_tree_t *tree)
 		return (1);
 	if (!tree->left && tree->right)
 		return (0);
-	if (tree->left && tree->left->n > tree->n)
+	if (tree->left && tree->left->n >= tree->n)
 		return (0);
-	if (tree->right && tree->right->n > tree->n)
+	if (tree->right && tree->right->n >= tree->n)
 		return (0);
 	return (isheap(tree->left) &&
 			isheap(tree->right));
